@@ -7,7 +7,7 @@
  */
 
 // Apply the java-library plugin to add support for Java Library
-apply plugin: 'java-library'
+apply plugin: 'java'
 
 group = 'cn.simplemind'
 version = '0.0.1-SNAPSHOT'
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    /*// This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
@@ -38,6 +38,19 @@ dependencies {
     )
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'*/
+
+    // In order to be compatible with the old gradle version, don't use api/implementation/testImplementation
+    // instead, use compile
+    compile (
+        'com.google.guava:guava:23.0',
+        //'aopalliance:aopalliance:1.0',
+        //'org.aspectj:aspectjweaver:1.8.13',
+        'org.springframework:spring-core:' + springVersion,
+        'org.springframework:spring-context:' + springVersion
+    )
+    testCompile(
+        'junit:junit:4.12'
+    )
 }
 

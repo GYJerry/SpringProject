@@ -6,17 +6,111 @@
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<!-- Definition use constructor -->
-	<bean id="textEditorUseConstructor" class="cn.simplemind.di.TextEditorUseConstructor" lazy-init="true">
+	<bean id="textEditorUseConstructor" class="cn.simplemind.di.TextEditorUseConstructor"
+		lazy-init="true">
 		<constructor-arg ref="spellChecker" />
 	</bean>
-	
+
 	<!-- Definition use setter -->
-	<bean id="textEditorUseSetter" class="cn.simplemind.di.TextEditorUseSetter" lazy-init="true">
-		<property name="spellChecker" ref="spellChecker"/>
+	<bean id="textEditorUseSetter" class="cn.simplemind.di.TextEditorUseSetter"
+		lazy-init="true">
+		<property name="spellChecker" ref="spellChecker" />
 	</bean>
 
 	<!-- Definition for spellChecker bean -->
-	<bean id="spellChecker" class="cn.simplemind.di.SpellChecker">
+	<bean id="spellChecker" class="cn.simplemind.di.SpellChecker"  lazy-init="true">
 	</bean>
+
+	<!-- Definition for collectionValueSet bean -->
+	<bean id="collectionValueSet" class="cn.simplemind.di.CollectionValueSet" lazy-init="true">
+
+		<property name="addressList">
+			<list>
+				<value>INDIA</value>
+				<value>Pakistan</value>
+				<value>USA</value>
+				<value>USA</value>
+			</list>
+		</property>
+
+		<property name="addressSet">
+			<set>
+				<value>INDIA</value>
+				<value>Pakistan</value>
+				<value>USA</value>
+				<value>USA</value>
+			</set>
+		</property>
+
+		<property name="addressMap">
+			<map>
+				<entry key="1" value="INDIA" />
+				<entry key="2" value="Pakistan" />
+				<entry key="3" value="USA" />
+				<entry key="4" value="USA" />
+			</map>
+		</property>
+
+		<property name="addressProp">
+			<props>
+				<prop key="one">INDIA</prop>
+				<prop key="two">Pakistan</prop>
+				<prop key="three">USA</prop>
+				<prop key="four">USA</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<!--
+	注入 Bean 引用
+	下面的 Bean 定义将帮助你理解如何注入 bean 的引用作为集合的元素。甚至你可以将引用和值混合在一起，如下所示：
+
+	<bean id="..." class="...">
+
+		<property name="addressList">
+			<list>
+				<ref bean="address1" />
+				<ref bean="address2" />
+				<value>Pakistan</value>
+			</list>
+		</property>
+
+		<property name="addressSet">
+			<set>
+				<ref bean="address1" />
+				<ref bean="address2" />
+				<value>Pakistan</value>
+			</set>
+		</property>
+
+		<property name="addressMap">
+			<map>
+				<entry key="one" value="INDIA" />
+				<entry key="two" value-ref="address1" />
+				<entry key="three" value-ref="address2" />
+			</map>
+		</property>
+
+	</bean>
+	为了使用上面的 bean 定义，你需要定义 setter 方法，它们应该也能够是用这种方式来处理引用。
+
+	注入 null 和空字符串的值
+	如果你需要传递一个空字符串作为值，那么你可以传递它，如下所示：
+
+	<bean id="..." class="exampleBean">
+		<property name="email" value="" />
+	</bean>
+	前面的例子相当于 Java 代码：exampleBean.setEmail("")。
+
+	如果你需要传递一个 NULL
+	值，那么你可以传递它，如下所示：
+
+	<bean id="..." class="exampleBean">
+		<property name="email">
+			<null />
+		</property>
+	</bean>
+	-->
 
 </beans>
