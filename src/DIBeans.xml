@@ -2,26 +2,42 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- Definition use constructor -->
+	<!-- 配置自动注解注入，Spring 2.5 开始就可以使用注解来配置依赖注入
+		1 @Required
+		@Required 注解应用于 bean 属性的 setter 方法。
+		
+		2 @Autowired
+		@Autowired 注解可以应用到 bean 属性的 setter 方法，非 setter 方法，构造函数和属性。
+		
+		3 @Qualifier
+		通过指定确切的将被连线的 bean，@Autowired 和 @Qualifier 注解可以用来删除混乱。
+		
+		4 JSR-250 Annotations
+		Spring 支持 JSR-250 的基础的注解，其中包括了 @Resource，@PostConstruct 和 @PreDestroy 注解。 -->
+	<context:annotation-config/>
+
 	<bean id="textEditorUseConstructor" class="cn.simplemind.di.TextEditorUseConstructor"
 		lazy-init="true">
 		<constructor-arg ref="spellChecker" />
 	</bean>
 
-	<!-- Definition use setter -->
 	<bean id="textEditorUseSetter" class="cn.simplemind.di.TextEditorUseSetter"
 		lazy-init="true">
 		<property name="spellChecker" ref="spellChecker" />
 	</bean>
 
-	<!-- Definition for spellChecker bean -->
+	<!-- 声明SpellChecker和spellChecker不会出现bean重名的异常，大小写不同为不同的bean -->
 	<bean id="spellChecker" class="cn.simplemind.di.SpellChecker"  lazy-init="true">
 	</bean>
+	<!-- <bean id="SpellChecker" class="cn.simplemind.di.SpellChecker"  lazy-init="true">
+	</bean> -->
 
-	<!-- Definition for collectionValueSet bean -->
 	<bean id="collectionValueSet" class="cn.simplemind.di.CollectionValueSet" lazy-init="true">
 
 		<property name="addressList">
@@ -112,5 +128,39 @@
 		</property>
 	</bean>
 	-->
+	
+	<!-- byName 自动注入区分bean name的大小写 -->
+	<bean id="textEditorAutowiredByName" class="cn.simplemind.di.TextEditorAutowiredByName"
+		lazy-init="true" autowire="byName">
+		<property name="name" value="special editor" />
+	</bean>
+	
+	<!-- byType 自动注入不区分大小写，上面声明的spellChecker可以被byType注入 -->
+	<!-- 如果它属性的 type 恰好与配置文件中 beans 中的一个相匹配（属性的类型和bean的类型，即与bean的class相匹配，不是bean的名字相匹配），它将尝试匹配和连接它的属性。
+		如，该 bean 定义了一个type为 SpellChecker 的属性（成员变量），将会找到 bean class 为 SpellChecker 的bean 进行注入，与bean的name无关 -->
+	<bean id="textEditorAutowiredByType" class="cn.simplemind.di.TextEditorAutowiredByType"
+		lazy-init="true" autowire="byType">
+		<property name="name" value="Generic Text Editor" />
+	</bean>
+	
+	<!-- 出现了重复的SpellChecker，byType自动注入的时候，系统会出现两个class为SpellChecker的bean，无法确定使用哪个而报异常 -->
+	<!-- <bean id="checker" class="cn.simplemind.di.SpellChecker"  lazy-init="true">
+	</bean> -->
+	
+	<!-- byConstructor -->
+	<!-- 这种模式与 byType 非常相似，但它应用于构造器参数。Spring 容器看作 beans，在 XML 配置文件中 beans 的 autowire 属性设置为 constructor。
+		然后，它尝试把它的构造函数的参数与配置文件中 beans 名称中的一个进行匹配和连线。如果找到匹配项，它会注入这些 bean，否则，它会抛出异常。 -->
+	<bean id="textEditorAutowiredByConstructor" class="cn.simplemind.di.TextEditorAutowiredByConstructor"
+		lazy-init="true" autowire="constructor">
+		<constructor-arg index="1" value="Generic Text Editor" />
+	</bean>
+	
+	<!-- @Required 注释应用于 bean 的 setter 方法，它表明受影响的 bean 属性在配置时必须放在 XML 配置文件中，
+		否则容器就会抛出一个 BeanInitializationException 异常 -->
+	<bean id="studentWithRequired" class="cn.simplemind.di.StudentWithRequired">
+		<!-- 可以尝试注释掉下面的某个注入配置，将会出现如Property 'age' is required for bean 'studentWithRequired' 的报错 -->
+		<property name="name" value="Zara" />
+		<property name="age" value="11" />
+	</bean>
 
 </beans>
