@@ -6,7 +6,7 @@
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
    <bean id="helloWorld" class="cn.simplemind.helloworld.HelloWorld" lazy-init="true"
-   		init-method="afterInit" destroy-method="afterDestory" scope="singleton">
+   		init-method="goInit" destroy-method="goDestory" scope="singleton">
        <property name="message" value="Hello Jerry!"/>
    </bean>
    

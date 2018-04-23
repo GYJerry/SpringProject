@@ -1,6 +1,5 @@
 package cn.simplemind.di;
 
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -99,12 +98,12 @@ public class MainApp {
 	public static void main(String[] args) {
 		AbstractApplicationContext context = new FileSystemXmlApplicationContext("src/DIBeans.xml");
 		
-		//di(context);
+		di(context);
 		//collectionValInjection(context);
 		//textEditorAutowiredByName(context);
 		//textEditorAutowiredByType(context);
 		//textEditorAutowiredByConstructor(context);
-		studentWithRequired(context);
+		//studentWithRequired(context);
 		
 		context.close();
 	}

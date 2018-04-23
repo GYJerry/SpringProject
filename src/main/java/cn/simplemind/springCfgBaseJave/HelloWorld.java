@@ -1,4 +1,4 @@
-package cn.simplemind.helloworld;
+package cn.simplemind.springCfgBaseJave;
 
 public class HelloWorld {
 	private String message;
@@ -15,7 +15,7 @@ public class HelloWorld {
 		System.out.println("The bean is going through init.");
 	}
 	
-	public void goDestory() {
+	public void goDestroy() {
 		System.out.println("The bean will destroy now.");
 	}
 	

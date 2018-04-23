@@ -1,12 +1,16 @@
 package cn.simplemind.helloworld;
 
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import cn.simplemind.springCfgBaseJave.ConfigEventHandler;
 
 public class MainApp {
 	public static void main(String[] args) {
 		//ApplicationContext context = new ClassPathXmlApplicationContext("src/Bean.xml");
 		ConfigurableApplicationContext context = new FileSystemXmlApplicationContext("src/HWBeans.xml");
+		ConfigurableApplicationContext configContext = new AnnotationConfigApplicationContext(ConfigEventHandler.class);
 		
 		System.out.println("sleep 2 second");
 		try {
