@@ -44,8 +44,8 @@ dependencies {
     // instead, use compile
     compile (
         'com.google.guava:guava:23.0',
-        //'aopalliance:aopalliance:1.0',
-        //'org.aspectj:aspectjweaver:1.8.13',
+        'aopalliance:aopalliance:1.0',
+        'org.aspectj:aspectjweaver:1.8.13',
         'org.springframework:spring-core:' + springVersion,
         'org.springframework:spring-context:' + springVersion
     )

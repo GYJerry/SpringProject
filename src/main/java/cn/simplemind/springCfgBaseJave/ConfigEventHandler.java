@@ -71,6 +71,7 @@ public class ConfigEventHandler {
             @Override
             public void onApplicationEvent(CustomEvent event) {
                 System.out.println("context customEvent : going through CustomEvent");
+                System.out.println(event.getSource().toString());
             }
             
         };

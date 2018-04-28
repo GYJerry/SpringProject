@@ -1,7 +1,6 @@
 package cn.simplemind.springCfgBaseJave;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -60,9 +59,22 @@ public class MainApp {
      * @date   2018年4月23日 下午2:15:45
      * @param  context
      */
-    public static void contextEventHandler(ConfigurableApplicationContext context) {
+    public static void contextEventHandler(AnnotationConfigApplicationContext context) {
         context.start();
         context.stop();
+    }
+    
+    /**
+     * 自定义事件
+     * 
+     * @author yingdui_wu
+     * @date   2018年4月24日 上午8:40:16
+     */
+    public static void customEvent(AnnotationConfigApplicationContext context) {
+        CustomEventPublisher customEventPublisher = context.getBean(CustomEventPublisher.class);
+        HelloWorld helloWorld = new HelloWorld();
+        helloWorld.setMessage("I am from customEvent");
+        customEventPublisher.publish(helloWorld);
     }
     
     /**
@@ -75,10 +87,11 @@ public class MainApp {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         
-        helloworld(context);
+        //helloworld(context);
         //studentInjection(context);
         //studentWithAutowired(context);
         //contextEventHandler(context);
+        customEvent(context);
         
         context.close();
         

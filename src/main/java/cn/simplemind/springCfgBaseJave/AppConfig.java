@@ -42,4 +42,9 @@ public class AppConfig {
         return new StudentWithAutowired();
     }
     
+    @Bean
+    public CustomEventPublisher customEventPublisher() {
+        return new CustomEventPublisher();
+    }
+    
 }

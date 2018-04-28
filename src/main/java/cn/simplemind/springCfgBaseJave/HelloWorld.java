@@ -18,5 +18,10 @@ public class HelloWorld {
 	public void goDestroy() {
 		System.out.println("The bean will destroy now.");
 	}
+
+    @Override
+    public String toString() {
+        return "HelloWorld [message=" + message + "]";
+    }
 	
 }

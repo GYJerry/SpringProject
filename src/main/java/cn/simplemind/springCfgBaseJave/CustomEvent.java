@@ -1,16 +1,17 @@
 package cn.simplemind.springCfgBaseJave;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.event.ApplicationContextEvent;
+import org.springframework.context.ApplicationEvent;
 
 /**
  * 自定义事件
  * @author yingdui_wu
  * @date   2018年4月23日 下午3:55:18
  */
-public class CustomEvent extends ApplicationContextEvent {
+public class CustomEvent extends ApplicationEvent {
 
-    public CustomEvent(ApplicationContext source) {
+    private static final long serialVersionUID = 2249169299305397442L;
+
+    public CustomEvent(Object source) {
         super(source);
     }
 
