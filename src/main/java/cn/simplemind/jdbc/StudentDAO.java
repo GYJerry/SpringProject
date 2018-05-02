@@ -13,7 +13,7 @@ public interface StudentDAO {
 
 	public void create(String name, Integer age);
 	
-	public void create(String name, Integer age, Integer marks, Integer year);
+	public void create(String name, Integer age, Integer marks, Integer year) throws Exception;
 
 	public Student getStudent(Integer id);
 

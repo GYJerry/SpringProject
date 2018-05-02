@@ -6,7 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class MainApp {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ConfigurableApplicationContext context = new FileSystemXmlApplicationContext("src/jdbc.xml");
 
 		// simple(context);
@@ -38,7 +38,7 @@ public class MainApp {
 		System.out.println(", Age : " + student.getAge());
 	}
 
-	public static void tranction(ConfigurableApplicationContext context) {
+	public static void tranction(ConfigurableApplicationContext context) throws Exception {
 		StudentJDBCTemplate studentJDBCTemplate = (StudentJDBCTemplate) context.getBean("studentJDBCTemplate");
 		System.out.println("------Records creation--------");
 		studentJDBCTemplate.create("Zara", 11, 99, 2010);

@@ -4,21 +4,20 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 public class StudentJDBCTemplate implements StudentDAO {
-
-	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 	private PlatformTransactionManager transactionManager;
 
 	@Override
 	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
@@ -65,7 +64,7 @@ public class StudentJDBCTemplate implements StudentDAO {
 	}
 
 	@Override
-	public void create(String name, Integer age, Integer marks, Integer year) {
+	public void create(String name, Integer age, Integer marks, Integer year) throws Exception {
 		TransactionDefinition def = new DefaultTransactionDefinition();
 		System.out.println("def.getName():" + def.getName());
 		System.out.println("def.getIsolationLevel():" + def.getIsolationLevel());
@@ -79,8 +78,10 @@ public class StudentJDBCTemplate implements StudentDAO {
 			String SQL1 = "insert into Student (name, age) values (?, ?)";
 			jdbcTemplate.update(SQL1, name, age);
 			// Get the latest student id to be used in Marks table
-			String SQL2 = "select * from Student order by id desc limit 1";
-			Student student = jdbcTemplate.queryForObject(SQL2, Student.class);
+			String SQL2 = "select * from Student order by id desc limit 0,1";
+			RowMapper<Student> rowMapper = new BeanPropertyRowMapper<Student>(Student.class);
+			//Student student = jdbcTemplate.queryForObject(SQL2, new StudentMapper());
+			Student student = jdbcTemplate.queryForObject(SQL2, rowMapper);
 			String SQL3 = "insert into Marks(sid, marks, year) " + "values (?, ?, ?)";
 			jdbcTemplate.update(SQL3, student.getId(), marks, year);
 			System.out.println("Created Name = " + name + ", Age = " + age);
@@ -94,7 +95,7 @@ public class StudentJDBCTemplate implements StudentDAO {
 	@Override
 	public List<StudentMarks> listStudentMarks() {
 		String SQL = "select Student.*,Marks.sid,Marks.marks,Marks.year from Student, Marks where Student.id=Marks.sid";
-		List<StudentMarks> studentMarks = jdbcTemplate.queryForList(SQL, StudentMarks.class);
+		List<StudentMarks> studentMarks = jdbcTemplate.query(SQL, new StudentMarksMapper());
 		return studentMarks;
 	}
 
