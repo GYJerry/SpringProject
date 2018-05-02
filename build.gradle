@@ -46,7 +46,10 @@ dependencies {
         'com.google.guava:guava:23.0',
         'aopalliance:aopalliance:1.0',
         'org.aspectj:aspectjweaver:1.8.13',
+        'mysql:mysql-connector-java:8.0.11',
         'org.springframework:spring-core:' + springVersion,
+        'org.springframework:spring-jdbc:' + springVersion,
+        'org.springframework:spring-tx:' + springVersion,
         'org.springframework:spring-context:' + springVersion
     )
     testCompile(
