@@ -47,6 +47,7 @@ dependencies {
         'aopalliance:aopalliance:1.0',
         'org.aspectj:aspectjweaver:1.8.13',
         'mysql:mysql-connector-java:8.0.11',
+        'com.alibaba:fastjson:1.2.47',
         'org.springframework:spring-core:' + springVersion,
         'org.springframework:spring-jdbc:' + springVersion,
         'org.springframework:spring-tx:' + springVersion,
