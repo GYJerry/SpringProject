@@ -1,5 +1,6 @@
 package cn.simplemind.aop;
 
+import cn.simplemind.aop.annotation.ClassAnnotation;
 import cn.simplemind.aop.annotation.MethodAnnotation;
 import cn.simplemind.aop.annotation.ParamAnnotation;
 
@@ -8,6 +9,7 @@ import cn.simplemind.aop.annotation.ParamAnnotation;
  * @author yingdui_wu
  * @date 2018年5月3日 上午8:47:57
  */
+@ClassAnnotation
 public class Student {
     private Integer age;
     private String name;

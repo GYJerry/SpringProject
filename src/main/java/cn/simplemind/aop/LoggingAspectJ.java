@@ -15,6 +15,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 import com.alibaba.fastjson.JSON;
 
+import cn.simplemind.aop.annotation.ClassAnnotation;
 import cn.simplemind.aop.annotation.MethodAnnotation;
 import cn.simplemind.aop.annotation.ParamAnnotation;
 import cn.simplemind.aop.annotation.ParamTypeAnnotation;
@@ -120,6 +121,16 @@ public class LoggingAspectJ {
             Annotation annotation = returnTypeAnnotations[i];
             if (annotation.annotationType().isAssignableFrom(ReturnTypeAnnotation.class)) {
                 System.out.println("successfully get annotation ReturnTypeAnnotation");
+            }
+        }
+        
+        // 方法所在类中的注解
+        ClassAnnotation classAnnotation = method.getDeclaringClass().getAnnotation(ClassAnnotation.class);
+        Annotation[] classAnnotations = method.getDeclaringClass().getAnnotations();
+        for (int i = 0; i < classAnnotations.length; i++) {
+            Annotation annotation = classAnnotations[i];
+            if (annotation.annotationType().isAssignableFrom(ClassAnnotation.class)) {
+                System.out.println("successfully get annotation ClassAnnotation");
             }
         }
         

@@ -62,7 +62,7 @@ public class MainApp {
         ConfigurableApplicationContext context = new FileSystemXmlApplicationContext("src/aopAspectJ.xml");
 
         Student student = (Student) context.getBean("student");
-        student.special(new ParamObj("wtf..."));
+        student.special(new ParamObj("Hello..."));
 
         context.close();
     }
